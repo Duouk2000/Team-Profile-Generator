@@ -115,5 +115,52 @@ const promptEngineer = () => {
     });
   };
 
+  // Function to prompt for intern details
+const promptIntern = () => {
+    inquirer.prompt([
+      {
+        type: "input",
+        name: "name",
+        message: "Enter the intern's name:",
+      },
+      {
+        type: "input",
+        name: "id",
+        message: "Enter the intern's employee ID:",
+      },
+      {
+        type: "input",
+        name: "email",
+        message: "Enter the intern's email address:",
+      },
+      {
+        type: "input",
+        name: "school",
+        message: "Enter the intern's school:",
+      },
+    ])
+    .then((answers) => {
+      // Create a new Intern object with the provided answers
+      const intern = new Intern(answers.name, answers.id, answers.email, answers.school);
+  
+      // Add the intern to the teamMembers array
+      teamMembers.push(intern);
+      console.log("Intern's Details:", teamMembers);
+  
+      // Call promptTeamMembers again to ask if more team members need to be added
+      promptTeamMembers();
+    });
+  };
+
+  // Function to generate HTML
+const generateHTML = () => {
+    // Use the render function to generate HTML using the teamMembers array
+    const renderedHTML = render(teamMembers);
+  
+    // Write the generated HTML to the specified output path
+    fs.writeFileSync(outputPath, renderedHTML);
+    console.log(`Team Profile Generator Complete! HTML file generated at ${outputPath}`);
+  };
+
 // Initial call to start prompting for manager details
 promptManager();
